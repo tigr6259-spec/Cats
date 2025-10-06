@@ -5,15 +5,11 @@ from tkinter import *
 from PIL import Image, ImageTk  # библиотека для работы с картинками
 import requests              # библиотека для обеспечения связи python с интернетом
 from io import BytesIO      # библиотека io для ввода и вывода информации
-
-from django.utils.text import normalize_newlines
-
-
 # BytesIO для преобразования информации из десятичной системы в изображение
-#from pygame.examples.chimp import load_image
 
 
-def load_image()
+
+def load_image(url):
     try:
         response = requests.get(url)   # делаем запрос по ссылке url и положим в response
         response.raise_for_status()     # обрабока исключений
@@ -24,6 +20,10 @@ def load_image()
         print(f"Произошла ошибка: {e}")
         return None
 
+def set_image():
+    label.config(image=img)
+    label.image = img
+
 
 
 window = Tk()
@@ -33,8 +33,12 @@ window.geometry('600x480')
 label = Label()
 label.pack()
 
+appdate_button = Button(text='Обновить', command=set_image)  # создаём кнопку для перезапуска программы,
+                                                                        # чтобы не перезапускать в консоле
+
 url = "https://cataas.com/cat"
 img = load_image(url)
+set_image()
 
 if img:
     label.config(image=img)  # устанавливаем картинку на метку
