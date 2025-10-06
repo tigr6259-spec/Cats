@@ -30,6 +30,10 @@ def set_image():     # функция для работы кнопки
         label.image = img
 
 
+def exit():
+    window.destroy()
+
+
 
 window = Tk()
 window.title('Cats')
@@ -38,8 +42,18 @@ window.geometry('600x520')
 label = Label()
 label.pack()
 
-update_button = Button(text='Обновить', command=set_image)  # создаём кнопку для перезапуска программы,
-update_button.pack()                                                                        # чтобы не перезапускать в консоле
+# update_button = Button(text='Обновить', command=set_image)  # создаём кнопку для перезапуска программы,
+# update_button.pack()                                       # чтобы не перезапускать в консоле
+
+menu_bar = Menu(window)     # создаём меню вместо кнопки "Обновить"
+window.config(menu=menu_bar)  # в окне window появилась меню
+
+file_menu = Menu(menu_bar, tearoff=0)               # чтобы меню не отклеивалась
+menu_bar.add_cascade(label='Файл', menu=file_menu)  #
+file_menu.add_command(label='Загрузить фото', command=set_image)
+file_menu.add_separator()
+file_menu.add_command(label='Выход', command=exit)
+
 
 url = "https://cataas.com/cat"
 # img = load_image(url)    # эти строчки переносим в функцию для работы кнопки def set_image()
