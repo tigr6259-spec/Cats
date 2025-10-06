@@ -15,34 +15,41 @@ def load_image(url):
         response.raise_for_status()     # обрабока исключений
         image_data = BytesIO(response.content) # сама картинка будет обработана с помощью BytesIO
         img = Image.open(image_data)        # открываем изображение с помощью библиотеки PIL и кладём в img(локал.перем.)
+        img.thumbnail((600, 480), Image.Resampling.LANCZOS)  # размещаем изображение  в окно  размером (600x480),
+        # которое прописываем кортежем  # способ позволяет не уменьшать качество картинки, когда мы изменяем размер
         return ImageTk.PhotoImage(img)  # функция вернёт картинку и положит в другой img, которое прописано в window
     except Exception as e:
         print(f"Произошла ошибка: {e}")
         return None
 
-def set_image():
-    label.config(image=img)
-    label.image = img
+def set_image():     # функция для работы кнопки
+    img = load_image(url)
+
+    if img:
+        label.config(image=img)
+        label.image = img
 
 
 
 window = Tk()
 window.title('Cats')
-window.geometry('600x480')
+window.geometry('600x520')
 
 label = Label()
 label.pack()
 
-appdate_button = Button(text='Обновить', command=set_image)  # создаём кнопку для перезапуска программы,
-                                                                        # чтобы не перезапускать в консоле
+update_button = Button(text='Обновить', command=set_image)  # создаём кнопку для перезапуска программы,
+update_button.pack()                                                                        # чтобы не перезапускать в консоле
 
 url = "https://cataas.com/cat"
-img = load_image(url)
-set_image()
+# img = load_image(url)    # эти строчки переносим в функцию для работы кнопки def set_image()
+#
+#
+# if img:
+#     label.config(image=img)  # устанавливаем картинку на метку
+#     label.image = img    # это нужно для того, чтобы сборщика нашу картинку не удалил
 
-if img:
-    label.config(image=img)  # устанавливаем картинку на метку
-    label.image = img    # это нужно для того, чтобы сборщика нашу картинку не удалил
+set_image()   # здесь функция вызывается, чтобы для вызова изображения в первый раз
 
 window.mainloop()
 
