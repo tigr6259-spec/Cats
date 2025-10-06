@@ -33,7 +33,10 @@ def load_image(url):
 #         label.image = img
 
 def open_new_window():     # функция для работы кнопки
-    img = load_image(url)
+    tag = tag_entry.get()  # получаем, что ввёл в эту строчку пользователь (загрузка по тегам)
+    url_tag = f"https://cataas.com/cat/{tag}" if tag else "https://cataas.com/cat"  # такой будет url_если tag не заполнен
+                # такой будет url_tag после ввода тега
+    img = load_image(url_tag)
 
     if img:
         new_window = Toplevel()
@@ -55,6 +58,12 @@ def exit():
 window = Tk()
 window.title('Cats')
 window.geometry('600x520')
+
+tag_entry = Entry()   # создаём поле ввода загрузки по тегам
+tag_entry.pack()
+
+load_button = Button(text="Загрузить по тегу", command=open_new_window)
+load_button.pack()
 
 
 
