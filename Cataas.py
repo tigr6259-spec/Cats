@@ -45,11 +45,11 @@ label.pack()
 # update_button = Button(text='Обновить', command=set_image)  # создаём кнопку для перезапуска программы,
 # update_button.pack()                                       # чтобы не перезапускать в консоле
 
-menu_bar = Menu(window)     # создаём меню вместо кнопки "Обновить"
+menu_bar = Menu(window)     # создаём меню вместо кнопки "Обновить" с использованием раннее созанной функции def set_image()
 window.config(menu=menu_bar)  # в окне window появилась меню
 
 file_menu = Menu(menu_bar, tearoff=0)               # чтобы меню не отклеивалась
-menu_bar.add_cascade(label='Файл', menu=file_menu)  #
+menu_bar.add_cascade(label='Файл', menu=file_menu)  # последующие кнопки меню будут появляться каскадом при клике на Файл
 file_menu.add_command(label='Загрузить фото', command=set_image)
 file_menu.add_separator()
 file_menu.add_command(label='Выход', command=exit)
